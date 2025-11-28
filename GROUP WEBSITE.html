@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Group 3 Creative Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0d;
+    --surface:#0f0f12;
+    --text:#e9e7ee;
+    --muted:#b8acc0;
+    --neon:#6f2bd8;        /* dark neon purple (solid icons) */
+    --neon-soft:#b44bff;
+    --glass: rgba(255,255,255,0.03);
+    --card: #111114;
+    --radius:16px;
+    --maxw:1200px;
+  }
+
+  /* light theme */
+  body.light {
+    --bg: #FFE4E9;
+    --surface: #ffffff;
+    --text: #1a1720;
+    --muted: #6b5a75;
+    --neon: #7e3be8;
+    --neon-soft:#c894ff;
+    --card: #ffffff;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:
+      radial-gradient(800px 400px at 10% 10%, rgba(180,75,255,0.03), transparent),
+      radial-gradient(600px 300px at 90% 90%, rgba(208,138,255,0.02), transparent),
+      var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition: background .35s ease, color .25s ease;
+    padding:20px;
+  }
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+  }
+
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 8px;margin-bottom:20px;
+  }
+  header .brand{ color:var(--neon); font-weight:800; letter-spacing:.6px }
+
+  .nav{display:flex;gap:12px;align-items:center}
+  .nav a{ color:var(--neon-soft); text-decoration:none; font-weight:600; padding:8px 10px; border-radius:8px; }
+  .nav a:hover{ background:linear-gradient(90deg, rgba(180,75,255,0.06), transparent); }
+
+  .mode-btn{
+    background: linear-gradient(90deg,var(--neon),var(--neon-soft));
+    color:white;border:0;padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:700;
+  }
+
+  /* HERO */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:28px;
+    align-items:center;
+    padding:28px;
+    border-radius:var(--radius);
+    border:1px solid rgba(180,75,255,0.06);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .hero h1{ margin:0 0 10px; font-size:36px; color:white; line-height:1.02 }
+  .hero p{ margin:0 0 18px; color:var(--muted); max-width:560px; }
+  .hero .actions{ display:flex; gap:12px; }
+
+  .openAbout{
+    background: linear-gradient(90deg,#8b5cf6,#a855f7);
+    color:white;
+    padding:10px 22px;
+    border-radius:12px;
+    border:0;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.25s;
+    box-shadow:0 4px 20px rgba(139,92,246,0.4);
+}
+
+.openAbout:hover{
+    background: linear-gradient(90deg,#9d6bff,#b66bff);
+    transform: translateY(-2px);
+    box-shadow:0 6px 25px rgba(149,83,255,0.55);
+}
+
+
+  /* LEADER SLIDESHOW */
+  .leader{
+    width:90%; 
+    max-width:450px; 
+    height:650px; 
+    border-radius:15px; 
+    overflow:hidden; position:relative;
+    border:1px solid rgba(180,75,255,0.05); 
+    box-shadow: 0 30px 70px rgba(180,75,255,0.05);
+    animation:float 6s ease-in-out infinite;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  }
+  @keyframes float{ 0%{transform:translateY(0)} 50%{transform:translateY(-10px)} 100%{transform:translateY(0)} }
+
+  .slideshow { position: relative; width:100%; height:100%; }
+  .slideshow .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: translateY(10px) scale(.995);
+    transition: opacity 600ms ease-in-out, transform 600ms ease-in-out;
+  }
+  .slideshow .slide.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* TEAM SECTION */
+  #team { margin-top:40px; text-align:center; }
+  #team h2{ color:var(--neon); font-weight:700; margin-bottom:20px; font-size:28px; }
+
+  /* 1-4 layout: large first item then grid for four */
+  .id-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap:20px;
+    margin-top:18px;
+  }
+
+  /* We will place the featured (first) card full-width then a 4-column grid below */
+  .id-grid .featured {
+    display:flex;
+    justify-content:center;
+  }
+  .id-grid .featured .id-card {
+    max-width:720px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    padding:18px;
+  }
+  .id-card { 
+    background:var(--card); 
+    border-radius:12px; 
+    border:1px solid rgba(180,75,255,0.06); 
+    box-shadow:0 8px 20px rgba(0,0,0,0.5); 
+    padding:12px; 
+    transition: transform .25s, border-color .25s;
+    width:100%;
+  }
+  .id-card:hover{ transform:translateY(-6px); border-color:var(--neon) }
+
+  /* featured image */
+  .id-card.featured-img img{
+    width:260px;
+    height:220px;
+    object-fit:cover;
+    border-radius:8px;
+    flex-shrink:0;
+  }
+  .id-card .meta {
+    text-align:left;
+    padding-left:8px;
+  }
+  .id-card .meta h5{ margin:6px 0; font-size:20px; color:white }
+  .id-card .meta p{ margin:0 0 8px; color:var(--muted) }
+
+  /* 4 small cards row */
+  .id-row {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:18px;
+    margin-top:6px;
+  }
+  .id-row .id-card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    border-radius:8px;
+  }
+  .id-row .id-card .meta { text-align:center; padding:8px 0 0 0 }
+
+  .view-btn {
+    margin-top: 12px;
+    padding: 10px 18px;
+    background: var(--neon);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .view-btn:hover { background: var(--neon-soft); transform: translateY(-2px); }
+
+  /* Social icon row inside modal */
+  .social-row{ display:flex; gap:12px; justify-content:center; margin-top:12px }
+  .social{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:44px; border-radius:10px; background:var(--neon);
+    box-shadow: 0 6px 22px rgba(111,43,216,0.28);
+    transition: transform .16s, box-shadow .16s, background .16s;
+  }
+  .social svg{ width:18px; height:18px; fill:white; display:block; }
+  .social:hover{ transform:translateY(-4px); box-shadow:0 12px 30px rgba(111,43,216,0.35); background:var(--neon-soft) }
+
+  footer{ margin-top:28px; text-align:center; color:var(--muted); font-size:14px }
+
+  /* MODAL (animated) */
+  .modal {
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease;
+  }
+  .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  .modal-content {
+      background: linear-gradient(180deg, #141018, #1b1820);
+      width: 92%;
+      max-width: 720px;
+      margin: 20px;
+      padding: 22px;
+      border-radius: 14px;
+      text-align: left;
+      transform: translateY(20px) scale(.98);
+      transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms;
+      box-shadow: 0 24px 80px rgba(99,44,177,0.18);
+  }
+  .modal.open .modal-content {
+      transform: translateY(0) scale(1);
+  }
+  .modal-left {
+      float:left;
+      width: 44%;
+  }
+  .modal-right {
+      float:right;
+      width: 52%;
+      padding-left:18px;
+  }
+  .modal-content img {
+      width:100%;
+      height:260px;
+      object-fit:cover;
+      border-radius:10px;
+      display:block;
+  }
+  .modal-content h2{ margin: 0 0 6px; color:var(--neon); }
+  .modal-content .role{ color:var(--neon-soft); margin-bottom:10px; font-weight:600; }
+  .modal-content p{ color:var(--muted); line-height:1.4; margin: 8px 0; }
+  .close {
+      color: #fff;
+      position:absolute;
+      top:14px;
+      right:18px;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+      opacity:0.9;
+  }
+
+  /* responsive tweaks */
+  @media (max-width:980px){
+    .hero{ grid-template-columns: 1fr; }
+    .id-row{ grid-template-columns: repeat(2, 1fr); }
+    .modal-left, .modal-right{ float:none; width:100%; padding:0; }
+    .modal-content{ padding:18px; }
+  }
+  @media (max-width:560px){
+    .id-row{ grid-template-columns: 1fr; }
+    .id-card.featured-img img{ width:160px; height:120px }
+  }
+</style>
+</head
+
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">GROUP PORTFOLIO</div>
+      <nav class="nav" aria-label="Main nav">
+        <a href="#home">Home</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact Us</a>
+        <button id="modeBtn" class="mode-btn" aria-pressed="false">CLICK ME</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section id="home" class="hero" aria-label="Intro">
+      <div class="hero-left">
+        <h1>HI EVERYONE, WE ARE THE GROUP 3<br><span style="color:var(--neon)">— fast, playful, polished.</span></h1>
+        <p>Small team. Big ideas. We build interfaces and apps people enjoy using.We may be small, but our creativity is limitless. We design digital experiences that feel simple, smooth, and satisfying to use.</p>
+        <div class="actions">
+          <button class="openAbout" onclick="openAboutModal()">About Us</button>
+        </div>
+      </div>
+
+      <div class="leader slideshow" aria-hidden="false">
+        <img class="slide active" src="https://uploads.onecompiler.io/442pqa4aq/445jtcttg/6887c39f-8e10-4a01-bba7-f9d3bd3429d3.jpg" alt="group image">
+        <img class="slide" src="https://uploads.onecompiler.io/442pqa4aq/445jtcttg/36a06e82-c0ad-46da-ad09-6361fa32b722.jpg" alt="group image">
+        <img class="slide" src="https://uploads.onecompiler.io/442pqa4aq/445jtcttg/4b3aae35-dcda-472b-854b-8ca995c7cde7.jpg" alt="group image">
+      </div>
+    </section>
+
+    <!-- TEAM: featured + 4-grid -->
+    <section id="team" aria-label="Team">
+      <h2>OUR CORE TEAM</h2>
+
+      <div class="id-grid">
+        <!-- Featured (1) -->
+        <div class="featured">
+          <div class="id-card featured-img" role="article" aria-label="Featured member Mariner">
+            <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003475.jpg" alt="Mariner photo">
+            <div class="meta">
+              <h5>MARINER M. AZARES</h5>
+              <p>IT Manager — passionate about tech, learning, and building real solutions.</p>
+              <button class="view-btn" onclick="openModal('mariner')">View Profile</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Four smaller cards (2..5) -->
+        <div class="id-row" aria-hidden="false">
+          <div class="id-card" role="article" aria-label="Rachelle">
+            <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003472.jpg" alt="Rachelle photo">
+            <div class="meta">
+              <h5>RACHELLE ANN FERNANDEZ</h5>
+              <p>Data Analyst - collects, cleans, and interprets data to identify trends and patterns, helping organizations make informed, data-driven decisions.</p>
+              <button class="view-btn" onclick="openModal('rachelle')">View Profile</button>
+            </div>
+          </div>
+
+          <div class="id-card" role="article" aria-label="Jessaline">
+            <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003470.jpg" alt="Jessaline photo">
+            <div class="meta">
+              <h5>JESSALINE L. GABRIEL</h5>
+              <p>Web Designer - creates the visual and functional aspects of a website, focusing on user experience, layout, and aesthetics through elements like color, typography, and graphics</p>
+              <button class="view-btn" onclick="openModal('jessaline')">View Profile</button>
+            </div>
+          </div>
+
+          <div class="id-card" role="article" aria-label="Princess Ann">
+            <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003473.jpg" alt="Princess Ann photo">
+            <div class="meta">
+              <h5>PRINCESS ANN A.MARZAN</h5>
+              <p>Game Developer - who specializes in creating video games.They bring a game from a concept to a playable reality by writing code,designing features,and testing for bugs.</p>
+              <button class="view-btn" onclick="openModal('marzan')">View Profile</button>
+            </div>
+          </div>
+
+          <div class="id-card" role="article" aria-label="Princess Joy">
+            <img src="https://uploads.onecompiler.io/442pqa4aq/444q8xuyz/582103489_2022509341869337_5136535606695549992_n.jpg" alt="Princess Joy photo">
+            <div class="meta">
+              <h5>PRINCESS JOY BUSTOBA</h5>
+              <p>Software Developer - a professional who designs, develops, tests, and maintains software and applications for computers, mobile devices, and systems.</p>
+              <button class="view-btn" onclick="openModal('princessjoy')">View Profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact" aria-label="Contact">
+      <h3>Contact Us</h3>
+      <a href="mailto:hellogroup3@example.com" style="color:var(--neon-soft)">Interested in working with us? Whether it's design, development, or creative work, we're open for collaborations. Let's build something amazing together. Drop us a message and let's talk about your ideas</a></p>
+    </section>
+
+    <footer><small>© <span id="year"></span> made it by heart. All Right Reserved</small></footer>
+  </div>
+
+  <!-- ============= MODALS ============= -->
+  <!-- MARINER -->
+  <div id="mariner-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="mariner-name">
+      <div class="close" onclick="closeModal('mariner')" title="Close">&times;</div>
+      <div class="modal-left">
+        <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003475.jpg" alt="Mariner">
+      </div>
+      <div class="modal-right">
+        <h2 id="mariner-name">Mariner M. Azares</h2>
+        <div class="role">IT Manager</div>
+        <p><strong>About:</strong> Hi everyone I am Mariner M. Azares, currently 2nd year student at University of Eastern Pangasinan, passionate about technology, digital innovation, and continuous learning. I enjoy exploring programming, web development, and system design.</p>
+        <p><strong>Hobbies:</strong> singing, watching drama / BL series, reading Manga and Wattpad.</p>
+        <p><strong>Skills:</strong> critical thinking, teamwork, basic coding, computer literacy, problem-solving.</p>
+        <p><strong>Fun fact:</strong> I am introvert.<p> <strong>Favorites:</strong> chicken curry and adobo.</p>
+        <div class="social-row" aria-label="Mariner social links">
+          <a class="social" href="https://www.facebook.com/mariner.manangan.azares" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <!-- Facebook square (solid) -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12.073C22 6.48 17.523 2 12 2S2 6.48 2 12.073C2 17.082 5.656 21.128 10.438 21.95v-6.96H7.898V12.07h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.772-1.63 1.563v1.877h2.773l-.443 2.92h-2.33v6.96C18.344 21.128 22 17.082 22 12.073z"/></svg>
+          </a>
+          <a class="social" href="https://www.instagram.com/dfntly_woo?igsh=MWhmdWx1YXNkMHo4dg==" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <!-- Instagram solid -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.505 4.505 0 0 0 12 7.5zm6.5-.75a1.125 1.125 0 1 0 1.125 1.125A1.127 1.127 0 0 0 18.5 6.75z"/></svg>
+          </a>
+          <a class="social" href="https://x.com/mochiii1476306?t=yq7yJ-ksjmjZJMve0mLIpQ&s=09" target="_blank" rel="noopener noreferrer" title="X / Twitter">
+            <!-- X (Twitter) solid simplified -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.924a7.623 7.623 0 0 1-2.196.602 3.845 3.845 0 0 0 1.684-2.11 7.66 7.66 0 0 1-2.43.93 3.827 3.827 0 0 0-6.52 3.49A10.865 10.865 0 0 1 3.157 4.63a3.827 3.827 0 0 0 1.184 5.106 3.748 3.748 0 0 1-1.735-.48v.049A3.828 3.828 0 0 0 6.02 13.3a3.85 3.85 0 0 1-1.73.065 3.828 3.828 0 0 0 3.574 2.657A7.673 7.673 0 0 1 2 18.407a10.84 10.84 0 0 0 5.877 1.72c7.056 0 10.92-5.85 10.92-10.92 0-.167-.004-.333-.012-.498A7.765 7.765 0 0 0 22 5.924z"/></svg>
+          </a>
+          <a class="social" href="https://www.tiktok.com/@wangxian7?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <!-- TikTok solid simplified -->
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2v11.2a3.8 3.8 0 1 1-3.8-3.8V2h3.8zM20 7.3a5.5 5.5 0 0 1-1.6-.25v6.1a6.75 6.75 0 1 1-6.75-6.75V15a3 3 0 1 0 3 3V6.85A5.52 5.52 0 0 0 20 7.3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+  <!-- RACHELLE -->
+  <div id="rachelle-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="rachelle-name">
+      <div class="close" onclick="closeModal('rachelle')" title="Close">&times;</div>
+      <div class="modal-left">
+        <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003472.jpg" alt="Rachelle">
+      </div>
+      <div class="modal-right">
+        <h2 id="rachelle-name">Ma. Rachelle Ann C. Fernandez</h2>
+        <div class="role">Data Analyst</div>
+        <p><strong>About:</strong> Hi everyone! I’m Ma. Rachelle Ann C. Fernandez (Rachelle). I'm from Umingan, Pangasinan, 19 years old, passionate about learning coding and connecting with people.</p>
+        <p><strong>Skills:</strong> strong communication, teamwork, collaborative mindset.</p>
+        <p><strong>Hobbies:</strong> dancing, playing guitar, cooking.</p>
+        <div class="social-row">
+  <a class="social" href="https://www.facebook.com/annrachelle.fernandez" target="_blank" rel="noopener noreferrer" title="Facebook">
+    <svg viewBox="0 0 24 24"><path d="M22 12.073C22 6.48 17.523 2 12 2S2 6.48 2 12.073C2 17.082 5.656 21.128 10.438 21.95v-6.96H7.898V12.07h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.772-1.63 1.563v1.877h2.773l-.443 2.92h-2.33v6.96C18.344 21.128 22 17.082 22 12.073z"/></svg>
+  </a>
+
+  <a class="social" href="https://www.instagram.com/annrachellefernandez?igsh=MWYwcjhrdHB3ZXV1aw==" target="_blank" rel="noopener noreferrer" title="Instagram">
+    <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.505 4.505 0 0 0 12 7.5zm6.5-.75a1.125 1.125 0 1 0 1.125 1.125A1.127 1.127 0 0 0 18.5 6.75z"/></svg>
+  </a>
+
+  <!-- NEW X (TWITTER) ACCOUNT -->
+  <a class="social" href="https://x.com/chelle1896049?t=wzDsWx1WsjtxB8rZZ3u7tQ&s=09" target="_blank" rel="noopener noreferrer" title="X / Twitter">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M22 5.924a7.623 7.623 0 0 1-2.196.602 3.845 3.845 0 0 0 1.684-2.11 7.66 7.66 0 0 1-2.43.93 3.827 3.827 0 0 0-6.52 3.49A10.865 10.865 0 0 1 3.157 4.63a3.827 3.827 0 0 0 1.184 5.106 3.748 3.748 0 0 1-1.735-.48v.049A3.828 3.828 0 0 0 6.02 13.3a3.85 3.85 0 0 1-1.73.065 3.828 3.828 0 0 0 3.574 2.657A7.673 7.673 0 0 1 2 18.407a10.84 10.84 0 0 0 5.877 1.72c7.056 0 10.92-5.85 10.92-10.92 0-.167-.004-.333-.012-.498A7.765 7.765 0 0 0 22 5.924z"/>
+    </svg>
+  </a>
+
+  <a class="social" href="https://www.tiktok.com/@annrachellefernan?_r=1&_t=ZS-91Dc9hcYnGz" target="_blank" rel="noopener noreferrer" title="TikTok">
+    <svg viewBox="0 0 24 24"><path d="M12.5 2v11.2a3.8 3.8 0 1 1-3.8-3.8V2h3.8zM20 7.3a5.5 5.5 0 0 1-1.6-.25v6.1a6.75 6.75 0 1 1-6.75-6.75V15a3 3 0 1 0 3 3V6.85A5.52 5.52 0 0 0 20 7.3z"/></svg>
+  </a>
+</div>
+
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+  <!-- JESSALINE -->
+  <div id="jessaline-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="jessaline-name">
+      <div class="close" onclick="closeModal('jessaline')" title="Close">&times;</div>
+      <div class="modal-left">
+        <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003470.jpg" alt="Jessaline">
+      </div>
+      <div class="modal-right">
+        <h2 id="jessaline-name">Jessaline L. Gabriel</h2>
+        <div class="role">Web Designer</div>
+        <p><strong>About:</strong> Hi! I'm Jessaline, a second year BSIT student — highly motivated with a passion for website design. I enjoy anime, movies, and reading novels in my free time.</p>
+        <p><strong>Skills:</strong> web design, programming.</p>
+        <p><strong>Fun fact:</strong> I like my own company.</p>
+        <div class="social-row">
+          <a class="social" href="https://www.facebook.com/gabrielle.sallyn" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12.073C22 6.48 17.523 2 12 2S2 6.48 2 12.073C2 17.082 5.656 21.128 10.438 21.95v-6.96H7.898V12.07h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.772-1.63 1.563v1.877h2.773l-.443 2.92h-2.33v6.96C18.344 21.128 22 17.082 22 12.073z"/></svg>
+          </a>
+          <a class="social" href="https://www.instagram.com/jessalinegabriel?igsh=aTMwNmFoeDBsbmky" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.505 4.505 0 0 0 12 7.5zm6.5-.75a1.125 1.125 0 1 0 1.125 1.125A1.127 1.127 0 0 0 18.5 6.75z"/></svg>
+          </a>
+          <a class="social" href="https://www.tiktok.com/@saleng9495?_r=1&_t=ZS-91DSNMXWe9o" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M12.5 2v11.2a3.8 3.8 0 1 1-3.8-3.8V2h3.8zM20 7.3a5.5 5.5 0 0 1-1.6-.25v6.1a6.75 6.75 0 1 1-6.75-6.75V15a3 3 0 1 0 3 3V6.85A5.52 5.52 0 0 0 20 7.3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+
+  <!-- PRINCESS ANN -->
+  <div id="marzan-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="marzan-name">
+      <div class="close" onclick="closeModal('marzan')" title="Close">&times;</div>
+      <div class="modal-left">
+        <img src="https://uploads.onecompiler.io/43bram2f8/444kuxh3h/1000003473.jpg" alt="Princess Ann">
+      </div>
+      <div class="modal-right">
+        <h2 id="marzan-name">Princess Ann A. Marzan</h2>
+        <div class="role">Product / Game Developer</div>
+        <p><strong>About:</strong> Hi I’m Princess Ann A. Marzan, a BSIT student passionate about learning new technologies and improving my IT skills.</p>
+        <p><strong>Skills:</strong> web development, problem-solving.</p>
+        <p><strong>Hobbies:</strong> watching movies.<p> <strong>Fun fact:</strong> I laugh at trivial reasons. <p><strong>Favorites:</strong> sisig; pink & black.</p>
+        <div class="social-row">
+          <a class="social" href="https://www.facebook.com/share/14Nr6iQQk9n/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12.073C22 6.48 17.523 2 12 2S2 6.48 2 12.073C2 17.082 5.656 21.128 10.438 21.95v-6.96H7.898V12.07h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.772-1.63 1.563v1.877h2.773l-.443 2.92h-2.33v6.96C18.344 21.128 22 17.082 22 12.073z"/></svg>
+          </a>
+          <a class="social" href="https://www.instagram.com/prinx_ess14?igsh=MXBtOXo3cWdndGF4YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" title="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.505 4.505 0 0 0 12 7.5zm6.5-.75a1.125 1.125 0 1 0 1.125 1.125A1.127 1.127 0 0 0 18.5 6.75z"/></svg>
+          </a>
+          <a class="social" href="https://www.tiktok.com/@ynaa0140?_r=1&_t=ZS-91DbXaeCBIj" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M12.5 2v11.2a3.8 3.8 0 1 1-3.8-3.8V2h3.8zM20 7.3a5.5 5.5 0 0 1-1.6-.25v6.1a6.75 6.75 0 1 1-6.75-6.75V15a3 3 0 1 0 3 3V6.85A5.52 5.52 0 0 0 20 7.3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+  <!-- PRINCESS JOY -->
+  <div id="princessjoy-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="princessjoy-name">
+      <div class="close" onclick="closeModal('princessjoy')" title="Close">&times;</div>
+      <div class="modal-left">
+        <img src="https://uploads.onecompiler.io/442pqa4aq/444pq7gdb/582055528_847008434970004_9055540790902096295_n.jpg" alt="Princess Joy">
+      </div>
+      <div class="modal-right">
+        <h2 id="princessjoy-name">Princess Joy Bustoba</h2>
+        <div class="role">Software Developer</div>
+        <p><strong>About:</strong> Hi I am Princess Joy Bustoba from Asingan, Pangasinan. BSIT student at University of Eastern Pangasinan — eager to learn, share, and meet people interested in tech.</p>
+        <p><strong>Hobbies:</strong> watching movies, playing online games, drawing, singing.</p>
+        <p><strong>Skills:</strong> communication, teamwork, support-oriented.</p>
+        <p><strong>Fun fact:</strong> I like reading novels and love cats & dogs. Favorite movie: Harry Potter series.</p>
+        <div class="social-row">
+          <a class="social" href="https://www.facebook.com/share/19uQXNFjC4/" target="_blank" rel="noopener noreferrer" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12.073C22 6.48 17.523 2 12 2S2 6.48 2 12.073C2 17.082 5.656 21.128 10.438 21.95v-6.96H7.898V12.07h2.54V9.797c0-2.507 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.772-1.63 1.563v1.877h2.773l-.443 2.92h-2.33v6.96C18.344 21.128 22 17.082 22 12.073z"/></svg>
+          </a>
+          <a class="social" href="https://tiktok.com/@kn0wnas_cess" target="_blank" rel="noopener noreferrer" title="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M12.5 2v11.2a3.8 3.8 0 1 1-3.8-3.8V2h3.8zM20 7.3a5.5 5.5 0 0 1-1.6-.25v6.1a6.75 6.75 0 1 1-6.75-6.75V15a3 3 0 1 0 3 3V6.85A5.52 5.52 0 0 0 20 7.3z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+<script>
+  // set year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // theme toggle
+  const btn = document.getElementById('modeBtn');
+  btn.addEventListener('click', ()=> {
+    document.body.classList.toggle('light');
+    const isLight = document.body.classList.contains('light');
+    btn.setAttribute('aria-pressed', String(isLight));
+    btn.textContent = isLight ? 'Toggle Dark' : 'Toggle Light';
+  });
+
+  // slideshow
+  let slideIndex = 0;
+  const slides = document.querySelectorAll('.slideshow .slide');
+  function showSlides(){
+    if(!slides.length) return;
+    slides.forEach(s=> s.classList.remove('active'));
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides[slideIndex].classList.add('active');
+  }
+  let slideTimer = setInterval(showSlides, 2600);
+  // pause on hover
+  document.querySelectorAll('.slideshow').forEach(s => {
+    s.addEventListener('mouseenter', ()=> clearInterval(slideTimer));
+    s.addEventListener('mouseleave', ()=> slideTimer = setInterval(showSlides, 2600));
+  });
+
+  
+// ABOUT US MODAL
+function openAboutModal() {
+  const modal = document.getElementById("about-modal");
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+
+
+  // modal helpers (use open class for animation)
+  function openModal(id){
+    const modal = document.getElementById(id + '-modal');
+    if(!modal) return;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    // trap focus minimally: focus first button inside modal-content
+    const btn = modal.querySelector('.close');
+    if(btn) btn.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id){
+    const modal = document.getElementById(id + '-modal');
+    if(!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  // close when clicking outside content
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) modal.classList.remove('open'), modal.setAttribute('aria-hidden','true'), document.body.style.overflow='';
+    });
+  });
+
+  // close on Esc
+  window.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal.open').forEach(m => { m.classList.remove('open'); m.setAttribute('aria-hidden','true'); });
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+<!-- ABOUT US MODAL -->
+<div id="about-modal" class="modal" aria-hidden="true">
+  <div class="modal-content">
+    <div class="close" onclick="closeModal('about')">&times;</div>
+    <h2 style="color:var(--neon); margin-bottom:10px;">ABOUT US</h2>
+    <p style="color:var(--muted); line-height:1.5;">
+      We are <b>Group 3</b> — a creative and passionate BSIT team dedicated to 
+      building clean, modern, and user-friendly digital projects.We are a team dedicated to providing high-quality services and ensuring customer satisfaction. Our goal is to create meaningful solutions that make life easier for our clients. With passion and commitment, we continue to innovate and improve every day.<br><br>
+      Our group believes in teamwork, innovation, and continuous learning.This project was created to provide accessible information and resources for students. Our team aims to promote learning, collaboration, and creativity through technology.<br><br>
+      <b>“Small team with BIG ideas.”</b>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
